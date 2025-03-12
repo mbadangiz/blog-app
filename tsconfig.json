@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": "./",
+    "paths": {
+      "@images/*": ["./src/assets/Images/*"],
+      "@svg/*": ["./src/assets/svg/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@FormFields/*": ["./src/core/components/FormFields/*"],
+      "@coreComps/*": ["./src/core/components/*"],
+      "@configs/*": ["./src/core/configs/*"],
+      "@providers/*": ["./src/core/providers/*"],
+      "@services/*": ["./src/core/services/*"],
+      "@typesDef/*": ["./src/core/types/*"],
+      "@core/*": ["./src/core/*"],
+      "@pages/*": ["./src/core/*"],
+      "@utils/*": ["./src/utils/*"]
+    }
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

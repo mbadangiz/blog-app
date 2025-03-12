@@ -1,0 +1,37 @@
+@keyframes AnimateDarkBackground {
+  from {
+    right: -100%;
+  }
+  to {
+    right: 0;
+  }
+}
+
+@keyframes AnimateDarkBackgroundExit {
+  from {
+    right: 0;
+  }
+  to {
+    right: -100%;
+  }
+}
+
+@keyframes AnimateMenu {
+  from {
+    top: 100%;
+  }
+  to {
+    top: 0;
+  }
+}
+
+.makeAnimateDarkBackgroundCome {
+  animation: AnimateDarkBackground 500ms;
+}
+.makeAnimateDarkBackgroundExit {
+  animation: AnimateDarkBackgroundExit 500ms;
+}
+.makeAnimateMenu {
+  animation: AnimateMenu 500ms;
+  animation-delay: 500ms;
+}
