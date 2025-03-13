@@ -24,7 +24,7 @@ function ProfileMenu({ childrenMenuHandlers }: ProfileMenuProps2) {
   return (
     <nav className={generateSingleClassString(profileMenuStyleConfig.nav)}>
       <section className="hidden h-32 w-full content-center items-center justify-center border-b-[1px] font-Black_ir text-2xl lg:flex">
-        صفحه ساز
+        Form-Generator
       </section>
       <ul className={generateSingleClassString(profileMenuStyleConfig.ul)}>
         {menu.map((items) => {
