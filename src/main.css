@@ -14,9 +14,11 @@
   .profileMainContentNav > * {
     @apply cursor-pointer;
   }
+
   input,
   select,
-  button {
+  button,
+  textArea {
     @apply border-0 text-light-navyblue !outline-none;
   }
 }

@@ -32,8 +32,8 @@ const Select = forwardRef<
     );
 
     return (
-      <div className={`max-w-64 text-right ${extraClass} space-y-3`}>
-        <label htmlFor={id} className="mb-6 text-right font-Medium_ir text-sm">
+      <div className={`max-w-64 ${extraClass} space-y-3`}>
+        <label htmlFor={id} className="font-Medium_ir mb-6 text-sm">
           {label}
           <span className="text-electricIndigo dark:text-dark-electricLavender">
             {required && "*"}

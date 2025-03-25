@@ -1,5 +1,5 @@
 import { CustomInputRHF } from "@core/components/FormFields/ReactHookFormCustomFields";
-import { useGetBlogList } from "@core/tanstack-hooks/Blogs";
+import { useGetBlogList } from "@core/tanstack-hooks/Blogs/BlogList";
 import Button from "@FormFields/Initial/Button";
 import { In_Blog } from "@typesDef/interfaces";
 import { useState } from "react";

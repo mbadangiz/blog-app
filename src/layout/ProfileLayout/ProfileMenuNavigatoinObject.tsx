@@ -1,5 +1,6 @@
 import { FaRegUser } from "react-icons/fa";
 import { In_ProfileMenuItems } from "src/core/types/interfaces";
+import { FaBlogger } from "react-icons/fa";
 
 const profileMenuObjects: In_ProfileMenuItems[] = [
   {
@@ -23,6 +24,12 @@ const profileMenuObjects: In_ProfileMenuItems[] = [
         parentId: 2,
       },
     ],
+  },
+  {
+    icon: <FaBlogger />,
+    id: 3,
+    path: "/profile/create-blog",
+    title: "New Blog",
   },
 ];
 

@@ -3,6 +3,7 @@ import ProfilePage from "../pages/ProfilePage";
 import EditProfilePage from "../pages/ProfilePage/EditProfilePage";
 import MyProfilePage from "../pages/ProfilePage/MyProfilePage";
 import Test from "./../Test/Test";
+import CreateBlog from "./../components/Blog/CreateBlog";
 
 export const profileRoutes: RouteObject[] = [
   {
@@ -22,6 +23,10 @@ export const profileRoutes: RouteObject[] = [
       {
         path: "/profile/test",
         element: <Test />,
+      },
+      {
+        path: "/profile/create-blog",
+        element: <CreateBlog />,
       },
     ],
   },

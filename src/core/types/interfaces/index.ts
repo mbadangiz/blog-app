@@ -23,6 +23,7 @@ import {
   T_Position,
 } from "../types";
 import { SweetAlertIcon } from "sweetalert2";
+import { BlogStatus } from "@typesDef/enum";
 
 export interface In_AppSettingsContextSchema {
   themeSchema: T_themeMode;
@@ -461,4 +462,62 @@ export interface In_BlogListParams {
   page?: number;
   limit?: number;
   categoryIds?: number[];
+}
+
+export interface In_BlogResponseDetailResonse {
+  success: boolean;
+  data: In_BlogDataDetail;
+}
+
+export interface In_BlogDataDetail {
+  id: number;
+  blogId: string;
+  authourId: string;
+  title: string;
+  content: string;
+  image: string;
+  status: "ARCHIVED" | "PUBLISHED" | "DRAFT"; // Assuming possible statuses
+  publishedAt: string; // ISO Date string
+  updatedAt: string; // ISO Date string
+  averageRate: number;
+  totalLikes: number;
+  seoTitle: string;
+  seoContent: string;
+  categories: In_BlogCategoryDetail[];
+  _count: In_BlogCountsDetail;
+  userInteraction: In_UserInteractionDetail;
+}
+
+export interface In_BlogCategoryDetail {
+  id: number;
+  blogId: string;
+  cateId: number;
+  category: {
+    name: string;
+  };
+}
+
+export interface In_BlogCountsDetail {
+  likes: number;
+  rates: number;
+}
+
+export interface In_UserInteractionDetail {
+  hasLiked: boolean;
+  userRate: number | null;
+}
+
+export interface In_CreateBlo {
+  title: string;
+  content: string;
+  status: BlogStatus;
+  seoTitle?: string;
+  seoContent?: string;
+  categoryIds: number[];
+}
+
+export interface In_CreateBlogResponse {
+  success: boolean;
+  message: string;
+  id: string;
 }

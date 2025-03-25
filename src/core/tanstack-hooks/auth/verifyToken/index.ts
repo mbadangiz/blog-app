@@ -5,5 +5,7 @@ export const useVerifyToken = () => {
   return useQuery({
     queryKey: ["verify-token"],
     queryFn: verifyToken,
+    refetchOnWindowFocus: false,
+    retry: false,
   });
 };
