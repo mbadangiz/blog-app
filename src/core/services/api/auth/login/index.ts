@@ -1,4 +1,3 @@
-// /auth/local/login
 import http from "@services/interceptor";
 import { In_Login, In_LoginResponse } from "@typesDef/interfaces";
 

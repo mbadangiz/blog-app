@@ -382,3 +382,44 @@ export interface In_LoginResponse {
   email: string;
   tokens: string;
 }
+export interface In_Location {
+  address: string;
+  city: string;
+  country: string;
+  state: string;
+  zipCode: string;
+}
+
+export interface In_Profile {
+  avatar: string;
+  bio: string;
+  firstname: string;
+  lastname: string;
+  createdAt: string;
+  updatedAt: string;
+  location: In_Location;
+}
+
+export interface In_ProfileResponse {
+  success: boolean;
+  profile: In_Profile;
+  profileCompletionPercentage: number;
+  message: string;
+}
+
+export interface In_EditProfileForm {
+  firstname?: string;
+  lastname?: string;
+  bio?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  zipCode?: string;
+}
+
+export interface In_ProfileUpdateResponse {
+  success: boolean;
+  message: string;
+  profile: In_Profile;
+}
