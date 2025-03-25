@@ -12,7 +12,7 @@ export const AppsSettingContext =
 function AppsSettingProvider({
   children,
   theme = En_themeMode.LIGHT,
-  dir = En_AppDirection.RTL,
+  dir = En_AppDirection.LTR,
 }: In_AppsSettingProviderProps) {
   const [themeSchema, setThemeSchema] = useState<T_themeMode>(theme);
   const [appDir, setAppDir] = useState<T_AppDirection>(dir);

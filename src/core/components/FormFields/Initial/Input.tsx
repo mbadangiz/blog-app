@@ -11,7 +11,7 @@ const CustomInput = forwardRef<HTMLInputElement, In_CustomInputProps>(
     ref,
   ) {
     return (
-      <Flex dir="col" className="w-max">
+      <Flex dir="col" className="">
         <label htmlFor={id} className="mb-3 font-Medium_ir text-sm">
           {label} {"  "}
           <span className="text-rose-600">{required && "*"}</span>
