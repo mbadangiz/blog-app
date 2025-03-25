@@ -77,8 +77,6 @@ function MenuItems({
       ? { paddingRight: 25 * (level ? level - 1 : 0) }
       : { paddingLeft: 25 * (level ? level - 1 : 0) };
 
-  console.log(indentStyle);
-
   return (
     <div className="relative">
       <Link

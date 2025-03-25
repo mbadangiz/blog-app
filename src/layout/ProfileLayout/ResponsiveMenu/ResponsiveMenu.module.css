@@ -1,4 +1,4 @@
-@keyframes AnimateDarkBackground {
+@keyframes AnimateDarkBackgroundRight {
   from {
     right: -100%;
   }
@@ -7,12 +7,30 @@
   }
 }
 
-@keyframes AnimateDarkBackgroundExit {
+@keyframes AnimateDarkBackgroundRightExit {
   from {
     right: 0;
   }
   to {
     right: -100%;
+  }
+}
+
+@keyframes AnimateDarkBackgroundLeft {
+  from {
+    left: -100%;
+  }
+  to {
+    left: 0;
+  }
+}
+
+@keyframes AnimateDarkBackgroundLeftExit {
+  from {
+    left: 0;
+  }
+  to {
+    left: -100%;
   }
 }
 
@@ -24,13 +42,22 @@
     top: 0;
   }
 }
+.makeAnimateDarkBackgroundCome[dir="rtl"] {
+  animation: AnimateDarkBackgroundRight 500ms;
+}
 
-.makeAnimateDarkBackgroundCome {
-  animation: AnimateDarkBackground 500ms;
+.makeAnimateDarkBackgroundCome[dir="ltr"] {
+  animation: AnimateDarkBackgroundLeft 500ms;
 }
-.makeAnimateDarkBackgroundExit {
-  animation: AnimateDarkBackgroundExit 500ms;
+
+.makeAnimateDarkBackgroundExit[dir="rtl"] {
+  animation: AnimateDarkBackgroundRightExit 500ms;
 }
+
+.makeAnimateDarkBackgroundExit[dir="ltr"] {
+  animation: AnimateDarkBackgroundLeftExit 500ms;
+}
+
 .makeAnimateMenu {
   animation: AnimateMenu 500ms;
   animation-delay: 500ms;
