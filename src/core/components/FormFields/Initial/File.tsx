@@ -1,10 +1,11 @@
-import { inputTypeFileIn_styleConfigs } from "@configs/In_styleConfigs/FormFields";
+import { inputTypeFileIn_styleConfigs } from "@configs/styleConfigs/FormFields";
 import { filesExtentionCategories, FileTypeIcons } from "@core/constants";
-import { FlexAllCentered } from "@coreComps/Divisions/Flex";
+import { FlexAllCentered } from "@coreComps/divisions/Flex";
 import { In_FileObject, In_InputFileProps } from "@typesDef/interfaces";
 import { T_fileTypes } from "@typesDef/types";
 import generateSingleClassString from "@utils/generateSingleString";
 import { ChangeEvent, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { CgClose } from "react-icons/cg";
 import { LuFilePlus2 } from "react-icons/lu";
 
@@ -77,11 +78,11 @@ function InputFile({
     const files = e.target.files ? Array.from(e.target.files) : [];
 
     if (limit && inputFiles.length >= limit)
-      alert(
-        "شما به حد نساب تعداد فایل انتخابی رسیده اید، و قادر به انتخاب فایل جدید نمی باشید.",
+      toast.error(
+        "You have reached the maximum number of allowed files and cannot select new files.",
       );
     else if (limit && files.length > limit)
-      alert("تعداد فایلا زیاده از نو  انتخات کن.");
+      toast.error("Too many files selected. Please select again.");
     else {
       const formattedFiles: In_FileObject[] = files.map((file, index) => ({
         files: file,
@@ -100,8 +101,7 @@ function InputFile({
       >
         <LuFilePlus2 size={24} />
         <p className="mx-auto text-center text-sm">
-          برای بارگذاری فایل جدید کلیک کنید و یا فایل مورد نظر را در اینجا رها
-          کنید.
+          Click to upload a new file or drag and drop your file here.
         </p>
 
         <input

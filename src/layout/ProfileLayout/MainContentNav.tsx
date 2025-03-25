@@ -1,4 +1,5 @@
 import { profileMainContentNavStyleConfig } from "@core/configs/styleConfigs/profile";
+import { useGetProfile } from "@core/tanstack-hooks/profile/getProfile";
 import useAppSettings from "@hooks/useAppSettings";
 import generateSingleClassString from "@utils/generateSingleString";
 import classNames from "classnames";
@@ -60,10 +61,15 @@ export function MainContentNav() {
 }
 
 function ProfileImage() {
+  const { data: profileData } = useGetProfile();
   return (
     <img
-      className="size-10"
-      src="https://avatar.iran.liara.run/public"
+      className="size-10 rounded-full"
+      src={
+        profileData?.profile?.avatar
+          ? profileData.profile.avatar
+          : "https://avatar.iran.liara.run/public"
+      }
       alt="avatar-sample"
     />
   );

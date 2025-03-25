@@ -1,11 +1,12 @@
-import {
-  profileMenuItemsStyleConfig,
-  profileMenuStyleConfig,
-} from "@core/configs/styleConfigs/profile";
+import { profileMenuStyleConfig } from "@core/configs/styleConfigs/profile";
 import generateSingleClassString from "@utils/generateSingleString";
 import classNames from "classnames";
-import { useState } from "react";
-import { RiArrowDownSLine, RiArrowLeftSLine } from "react-icons/ri";
+import { useState, useEffect } from "react";
+import {
+  RiArrowDownSLine,
+  RiArrowLeftSLine,
+  RiArrowRightSLine,
+} from "react-icons/ri";
 import { Link, useLocation } from "react-router-dom";
 import {
   In_ProfileMenuItems,
@@ -13,6 +14,7 @@ import {
 } from "../../core/types/interfaces";
 import routesLeveling from "./../../utils/routesLeveling";
 import { profileMenuObjects } from "./ProfileMenuNavigatoinObject";
+import useAppSettings from "@hooks/useAppSettings";
 
 interface ProfileMenuProps2 {
   childrenMenuHandlers: In_ProfileMenuProps;
@@ -20,13 +22,19 @@ interface ProfileMenuProps2 {
 
 function ProfileMenu({ childrenMenuHandlers }: ProfileMenuProps2) {
   const menu = routesLeveling(profileMenuObjects, 1);
+  const { appDir } = useAppSettings();
 
   return (
     <nav className={generateSingleClassString(profileMenuStyleConfig.nav)}>
-      <section className="hidden h-32 w-full content-center items-center justify-center border-b-[1px] font-Black_ir text-2xl lg:flex">
+      <section className="font-Black_ir hidden h-32 w-full content-center items-center justify-center border-b-[1px] text-2xl lg:flex">
         Form-Generator
       </section>
-      <ul className={generateSingleClassString(profileMenuStyleConfig.ul)}>
+      <ul
+        className={classNames(
+          generateSingleClassString(profileMenuStyleConfig.ul),
+          appDir === "rtl" ? "pr-4" : "pl-4",
+        )}
+      >
         {menu.map((items) => {
           return (
             <MenuItems
@@ -52,33 +60,41 @@ function MenuItems({
 }) {
   const { icon, id, path, title, children, level } = items;
   const { pathname } = useLocation();
-  const [isClose, setIsClose] = useState(false);
+  const [isOpen, setIsOpen] = useState(() => {
+    return children?.some((child) => pathname.includes(path)) || false;
+  });
   const { setChildrenMenu } = childrenMenuHandlers;
+  const { appDir } = useAppSettings();
 
-  const { liSC, linkSC } = profileMenuItemsStyleConfig;
+  const indentStyle =
+    appDir === "rtl"
+      ? { paddingRight: 25 * (level ? level - 1 : 0) }
+      : { paddingLeft: 25 * (level ? level - 1 : 0) };
 
-  const {
-    default: liSCDefault,
-    active: liSCActive,
-    deactive: liSCDeactive,
-    dark: liSCdark,
-  } = liSC;
+  const isActive =
+    pathname === path || children?.some((child) => pathname === child.path);
 
-  const { default: linkSCCDefault, active: linkSCActive } = linkSC;
+  useEffect(() => {
+    if (children?.some((child) => pathname.includes(path))) {
+      setIsOpen(true);
+    }
+  }, [pathname, path, children]);
 
   return (
     <div className="relative">
       <Link
         to={path}
-        className={classNames({
-          [linkSCCDefault as string]: true,
-          [linkSCActive as string]: pathname === path,
-        })}
+        className={classNames(
+          "block transition-all duration-200 ease-in-out hover:bg-gray-50 dark:hover:bg-gray-800/50",
+          {
+            "bg-gray-50 dark:bg-gray-800/50": isActive,
+          },
+        )}
         onClick={(e) => {
           const getWindowWidth = window.innerWidth;
           if (children) {
             e.preventDefault();
-            setIsClose((prev) => !prev);
+            setIsOpen((prev) => !prev);
             if (getWindowWidth < 600) {
               setChildrenMenu(items);
             }
@@ -87,52 +103,58 @@ function MenuItems({
         key={id}
       >
         <li
-          className={classNames({
-            [liSCDefault as string]: true,
-            [liSCdark as string]: true,
-            [liSCDeactive as string]: pathname !== path,
-            [liSCActive as string]: pathname === path,
-          })}
-          style={{
-            paddingRight: 25 * (level ? level - 1 : 0),
-          }}
+          className={classNames(
+            "relative flex items-center justify-between py-2.5",
+            "transition-all duration-200 ease-in-out",
+            {
+              "text-gray-600 dark:text-gray-300": !isActive,
+              "text-primary-600 dark:text-primary-400 font-medium": isActive,
+              [appDir === "rtl" ? "border-l-4" : "border-r-4"]: isActive,
+              "border-primary-600 dark:border-primary-400": isActive,
+            },
+          )}
+          style={indentStyle}
         >
-          <div className="flex content-center items-center justify-between gap-3">
-            <div
-              className={classNames({
-                "text-2xl md:text-base": true,
-                "text-light-steelBlue": pathname !== path,
-                "text-electricIndigo dark:text-dark-electricLavender":
-                  pathname === path,
+          <div
+            className={classNames(
+              "flex items-center gap-3",
+              appDir === "rtl" ? "pr-4" : "pl-4",
+            )}
+          >
+            <span
+              className={classNames("transition-colors duration-200", {
+                "text-gray-400 dark:text-gray-500": !isActive,
+                "text-primary-600 dark:text-primary-400": isActive,
               })}
             >
               {icon}
-            </div>
-            <div
-              className={classNames({
-                "hidden lg:block": true,
-                "font-Bold_ir": pathname === path,
-              })}
-            >
-              {title}
-            </div>
+            </span>
+            <span>{title}</span>
           </div>
-
-          {children &&
-            (!isClose ? (
-              <RiArrowLeftSLine size={22} className="hidden lg:block" />
-            ) : (
-              <RiArrowDownSLine size={22} className="hidden lg:block" />
-            ))}
+          {children && (
+            <div
+              className={classNames(
+                "flex items-center transition-transform duration-200",
+                appDir === "rtl" ? "pl-4" : "pr-4",
+                {
+                  "rotate-180": isOpen,
+                },
+              )}
+            >
+              <RiArrowDownSLine className="h-5 w-5" />
+            </div>
+          )}
         </li>
       </Link>
       {children && (
         <div
-          className={classNames({
-            "hidden lg:block": true,
-            "h-0 overflow-hidden": isClose === false,
-            "h-max overflow-hidden": isClose === true,
-          })}
+          className={classNames(
+            "overflow-hidden transition-all duration-200 ease-in-out",
+            {
+              "max-h-0": !isOpen,
+              "max-h-[500px]": isOpen,
+            },
+          )}
         >
           {children.map((items) => (
             <MenuItems
@@ -146,35 +168,3 @@ function MenuItems({
     </div>
   );
 }
-
-// function isChild(list: In_ProfileMenuItems[], currentPath: string): number {
-//   for (const item of list) {
-//     if (item.path === currentPath) {
-//       return item.parentId || 0;
-//     }
-
-//     if (item.children) {
-//       const parentId = isChild(item.children, currentPath);
-//       if (parentId !== 0) {
-//         return parentId;
-//       }
-//     }
-//   }
-
-//   return 0;
-// }
-
-// function findMainParent(list: In_ProfileMenuItems[], parentId: number) {
-//   for (const items of list) {
-//     if (items.id === parentId) {
-//       return items;
-//     }
-
-//     if (items.children) {
-//       const data = findMainParent(items.children, parentId);
-//       if (data?.level! > 1) {
-//       }
-//     }
-//   }
-//   return null;
-// }

@@ -50,3 +50,8 @@ export enum En_Position {
   LEFT = "left",
   RIGHT = "right",
 }
+export enum BlogStatus {
+  DRAFT = "DRAFT",
+  PUBLISHED = "PUBLISHED",
+  ARCHIVED = "ARCHIVED",
+}

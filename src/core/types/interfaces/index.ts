@@ -23,6 +23,7 @@ import {
   T_Position,
 } from "../types";
 import { SweetAlertIcon } from "sweetalert2";
+import { BlogStatus } from "@typesDef/enum";
 
 export interface In_AppSettingsContextSchema {
   themeSchema: T_themeMode;
@@ -306,4 +307,217 @@ export interface In_TimeLineData {
 }
 export interface In_TimeLineProps {
   data: In_TimeLineData[];
+}
+
+export interface In_RegisterStep1 {
+  email: string;
+}
+export interface In_RegisterStep2 {
+  email: string;
+  verificationCode: string;
+}
+export interface In_RegisterStep3 {
+  email: string;
+  username: string;
+  password: string;
+}
+
+export interface In_RegisterStep1Response {
+  success: boolean;
+  message: string;
+  nextStep: string;
+  otpNum: string;
+}
+
+export interface In_RegisterStep2Response {
+  success: boolean;
+  message: string;
+}
+export interface In_RegisterStep3Response {
+  success: boolean;
+  message: string;
+  userid: string;
+  token: string;
+}
+
+export interface In_RegisterStep3Opt {
+  username?: string;
+  email?: string;
+  password?: string;
+}
+
+export interface RegisterStep1Data {
+  email: string;
+}
+
+export interface RegisterStep2Data {
+  otp: string;
+}
+
+export interface RegisterStep3Data {
+  username: string;
+  password: string;
+}
+
+export interface RegisterContextType {
+  step1Data: RegisterStep1Data | null;
+  step2Data: RegisterStep2Data | null;
+  step3Data: RegisterStep3Data | null;
+  setStep1Data: (data: RegisterStep1Data) => void;
+  setStep2Data: (data: RegisterStep2Data) => void;
+  setStep3Data: (data: RegisterStep3Data) => void;
+  clearRegistrationData: () => void;
+}
+
+export interface In_Login {
+  emailOrUsername: string;
+  password: string;
+  rememberme: boolean;
+}
+
+export interface In_LoginResponse {
+  success: boolean;
+  message: string;
+  roles: string[];
+  username: string;
+  email: string;
+  tokens: string;
+}
+export interface In_Location {
+  address: string;
+  city: string;
+  country: string;
+  state: string;
+  zipCode: string;
+}
+
+export interface In_Profile {
+  avatar: string;
+  bio: string;
+  firstname: string;
+  lastname: string;
+  createdAt: string;
+  updatedAt: string;
+  location: In_Location;
+}
+
+export interface In_ProfileResponse {
+  success: boolean;
+  profile: In_Profile;
+  profileCompletionPercentage: number;
+  message: string;
+}
+
+export interface In_EditProfileForm {
+  firstname?: string;
+  lastname?: string;
+  bio?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  zipCode?: string;
+}
+
+export interface In_ProfileUpdateResponse {
+  success: boolean;
+  message: string;
+  profile: In_Profile;
+}
+
+export interface In_BlogCategory {
+  id: number;
+  name: string;
+}
+
+export interface In_Blog {
+  blogId: string;
+  title: string;
+  content: string;
+  status: "ARCHIVED" | "PUBLISHED";
+  image: string;
+  averageRate: number;
+  publishedAt: string;
+  updatedAt: string;
+  categories: In_BlogCategory[];
+  totalLikes: number;
+  totalRates: number;
+}
+
+export interface In_Pagination {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export interface In_BlogListResponse {
+  success: boolean;
+  data: In_Blog[];
+  pagination: In_Pagination;
+}
+
+export interface In_BlogListParams {
+  search?: string;
+  page?: number;
+  limit?: number;
+  categoryIds?: number[];
+}
+
+export interface In_BlogResponseDetailResonse {
+  success: boolean;
+  data: In_BlogDataDetail;
+}
+
+export interface In_BlogDataDetail {
+  id: number;
+  blogId: string;
+  authourId: string;
+  title: string;
+  content: string;
+  image: string;
+  status: "ARCHIVED" | "PUBLISHED" | "DRAFT"; // Assuming possible statuses
+  publishedAt: string; // ISO Date string
+  updatedAt: string; // ISO Date string
+  averageRate: number;
+  totalLikes: number;
+  seoTitle: string;
+  seoContent: string;
+  categories: In_BlogCategoryDetail[];
+  _count: In_BlogCountsDetail;
+  userInteraction: In_UserInteractionDetail;
+}
+
+export interface In_BlogCategoryDetail {
+  id: number;
+  blogId: string;
+  cateId: number;
+  category: {
+    name: string;
+  };
+}
+
+export interface In_BlogCountsDetail {
+  likes: number;
+  rates: number;
+}
+
+export interface In_UserInteractionDetail {
+  hasLiked: boolean;
+  userRate: number | null;
+}
+
+export interface In_CreateBlo {
+  title: string;
+  content: string;
+  status: BlogStatus;
+  seoTitle?: string;
+  seoContent?: string;
+  categoryIds: number[];
+}
+
+export interface In_CreateBlogResponse {
+  success: boolean;
+  message: string;
+  id: string;
 }

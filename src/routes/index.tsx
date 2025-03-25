@@ -5,8 +5,14 @@ import { authRoutes } from "./AuthRoutes";
 import { homeRoutes } from "./HomeRoutes";
 import { profileRoutes } from "./ProfileRoutes";
 import Test from "./../Test/Test";
+import { blogRoutes } from "./BlogRoutes";
 
-const routes: RouteObject[] = [...homeRoutes, ...authRoutes, ...profileRoutes];
+const routes: RouteObject[] = [
+  ...homeRoutes,
+  ...authRoutes,
+  ...profileRoutes,
+  ...blogRoutes,
+];
 
 const myRoutes = createBrowserRouter([
   {
@@ -21,7 +27,7 @@ const myRoutes = createBrowserRouter([
   {
     path: "*",
     element: <Page404 />,
-    errorElement: <div>خطایی رخ داده است.</div>,
+    errorElement: <div>Error...</div>,
   },
 ]);
 
