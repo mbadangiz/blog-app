@@ -1,7 +1,7 @@
+import { In_Blog } from "@typesDef/interfaces";
+import { CiHeart, CiStar } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import CoverImage from "./CoverImage";
-import { CiClock2, CiHeart, CiStar } from "react-icons/ci";
-import { In_Blog } from "@typesDef/interfaces";
 const BlogCard = ({ blog }: { blog: In_Blog }) => {
   return (
     <Link to={`/blog/${blog.blogId}`}>
