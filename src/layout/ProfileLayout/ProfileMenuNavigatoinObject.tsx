@@ -26,8 +26,16 @@ const profileMenuObjects: In_ProfileMenuItems[] = [
       {
         id: 5,
         icon: <GoDotFill />,
-        path: "/profile/test",
-        title: "c",
+        path: "",
+        title: "My Pages",
+        children: [
+          {
+            id: 6,
+            icon: <GoDotFill />,
+            path: "",
+            title: "c",
+          },
+        ],
       },
     ],
   },

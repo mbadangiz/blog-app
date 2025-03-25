@@ -5,7 +5,11 @@ import {
 import generateSingleClassString from "@utils/generateSingleString";
 import classNames from "classnames";
 import { useState } from "react";
-import { RiArrowDownSLine, RiArrowLeftSLine } from "react-icons/ri";
+import {
+  RiArrowDownSLine,
+  RiArrowLeftSLine,
+  RiArrowRightSLine,
+} from "react-icons/ri";
 import { Link, useLocation } from "react-router-dom";
 import {
   In_ProfileMenuItems,
@@ -13,6 +17,7 @@ import {
 } from "../../core/types/interfaces";
 import routesLeveling from "./../../utils/routesLeveling";
 import { profileMenuObjects } from "./ProfileMenuNavigatoinObject";
+import useAppSettings from "@hooks/useAppSettings";
 
 interface ProfileMenuProps2 {
   childrenMenuHandlers: In_ProfileMenuProps;
@@ -23,7 +28,7 @@ function ProfileMenu({ childrenMenuHandlers }: ProfileMenuProps2) {
 
   return (
     <nav className={generateSingleClassString(profileMenuStyleConfig.nav)}>
-      <section className="hidden h-32 w-full content-center items-center justify-center border-b-[1px] font-Black_ir text-2xl lg:flex">
+      <section className="font-Black_ir hidden h-32 w-full content-center items-center justify-center border-b-[1px] text-2xl lg:flex">
         Form-Generator
       </section>
       <ul className={generateSingleClassString(profileMenuStyleConfig.ul)}>
@@ -55,6 +60,7 @@ function MenuItems({
   const [isClose, setIsClose] = useState(false);
   const { setChildrenMenu } = childrenMenuHandlers;
 
+  const { appDir } = useAppSettings();
   const { liSC, linkSC } = profileMenuItemsStyleConfig;
 
   const {
@@ -65,6 +71,13 @@ function MenuItems({
   } = liSC;
 
   const { default: linkSCCDefault, active: linkSCActive } = linkSC;
+
+  const indentStyle =
+    appDir === "rtl"
+      ? { paddingRight: 25 * (level ? level - 1 : 0) }
+      : { paddingLeft: 25 * (level ? level - 1 : 0) };
+
+  console.log(indentStyle);
 
   return (
     <div className="relative">
@@ -89,41 +102,27 @@ function MenuItems({
         <li
           className={classNames({
             [liSCDefault as string]: true,
-            [liSCdark as string]: true,
-            [liSCDeactive as string]: pathname !== path,
             [liSCActive as string]: pathname === path,
+            [liSCDeactive as string]: pathname !== path,
+            [liSCdark as string]: true,
           })}
-          style={{
-            paddingRight: 25 * (level ? level - 1 : 0),
-          }}
+          style={indentStyle}
         >
-          <div className="flex content-center items-center justify-between gap-3">
-            <div
-              className={classNames({
-                "text-2xl md:text-base": true,
-                "text-light-steelBlue": pathname !== path,
-                "text-electricIndigo dark:text-dark-electricLavender":
-                  pathname === path,
-              })}
-            >
-              {icon}
-            </div>
-            <div
-              className={classNames({
-                "hidden lg:block": true,
-                "font-Bold_ir": pathname === path,
-              })}
-            >
-              {title}
-            </div>
+          <div className="flex items-center gap-2">
+            {icon}
+            <span>{title}</span>
           </div>
-
-          {children &&
-            (!isClose ? (
-              <RiArrowLeftSLine size={22} className="hidden lg:block" />
-            ) : (
-              <RiArrowDownSLine size={22} className="hidden lg:block" />
-            ))}
+          {children && (
+            <div className="flex items-center">
+              {isClose ? (
+                <RiArrowDownSLine className="h-5 w-5" />
+              ) : appDir === "ltr" ? (
+                <RiArrowRightSLine className="h-5 w-5" />
+              ) : (
+                <RiArrowLeftSLine className="h-5 w-5" />
+              )}
+            </div>
+          )}
         </li>
       </Link>
       {children && (
@@ -146,35 +145,3 @@ function MenuItems({
     </div>
   );
 }
-
-// function isChild(list: In_ProfileMenuItems[], currentPath: string): number {
-//   for (const item of list) {
-//     if (item.path === currentPath) {
-//       return item.parentId || 0;
-//     }
-
-//     if (item.children) {
-//       const parentId = isChild(item.children, currentPath);
-//       if (parentId !== 0) {
-//         return parentId;
-//       }
-//     }
-//   }
-
-//   return 0;
-// }
-
-// function findMainParent(list: In_ProfileMenuItems[], parentId: number) {
-//   for (const items of list) {
-//     if (items.id === parentId) {
-//       return items;
-//     }
-
-//     if (items.children) {
-//       const data = findMainParent(items.children, parentId);
-//       if (data?.level! > 1) {
-//       }
-//     }
-//   }
-//   return null;
-// }

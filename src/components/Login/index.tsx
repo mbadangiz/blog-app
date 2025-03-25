@@ -30,7 +30,6 @@ function Login() {
   const onSubmit = (data: LoginFormData) => {
     login(data, {
       onSuccess: (success) => {
-        console.log(success);
         if (success.success) {
           toast.success(success.message);
           localStorage.setItem("token", success.tokens);
