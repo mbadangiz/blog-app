@@ -4,8 +4,9 @@ import { Password } from "../Initial/Input";
 
 export const ReactHookFormPassword = ({
   name = "",
+  label = "",
   ...props
-}: InputHTMLAttributes<HTMLInputElement>) => {
+}: InputHTMLAttributes<HTMLInputElement> & { label?: string }) => {
   const {
     control,
     formState: { errors },
@@ -17,7 +18,15 @@ export const ReactHookFormPassword = ({
       name={name!}
       defaultValue={""}
       render={({ field }) => {
-        return <Password {...props} {...field} name={name} error={errors} />;
+        return (
+          <Password
+            {...props}
+            {...field}
+            name={name}
+            error={errors}
+            label={label}
+          />
+        );
       }}
     />
   );

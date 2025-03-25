@@ -307,3 +307,63 @@ export interface In_TimeLineData {
 export interface In_TimeLineProps {
   data: In_TimeLineData[];
 }
+
+export interface In_RegisterStep1 {
+  email: string;
+}
+export interface In_RegisterStep2 {
+  email: string;
+  verificationCode: string;
+}
+export interface In_RegisterStep3 {
+  email: string;
+  username: string;
+  password: string;
+}
+
+export interface In_RegisterStep1Response {
+  success: boolean;
+  message: string;
+  nextStep: string;
+  otpNum: string;
+}
+
+export interface In_RegisterStep2Response {
+  success: boolean;
+  message: string;
+}
+export interface In_RegisterStep3Response {
+  success: boolean;
+  message: string;
+  userid: string;
+  token: string;
+}
+
+export interface In_RegisterStep3Opt {
+  username?: string;
+  email?: string;
+  password?: string;
+}
+
+export interface RegisterStep1Data {
+  email: string;
+}
+
+export interface RegisterStep2Data {
+  otp: string;
+}
+
+export interface RegisterStep3Data {
+  username: string;
+  password: string;
+}
+
+export interface RegisterContextType {
+  step1Data: RegisterStep1Data | null;
+  step2Data: RegisterStep2Data | null;
+  step3Data: RegisterStep3Data | null;
+  setStep1Data: (data: RegisterStep1Data) => void;
+  setStep2Data: (data: RegisterStep2Data) => void;
+  setStep3Data: (data: RegisterStep3Data) => void;
+  clearRegistrationData: () => void;
+}

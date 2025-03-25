@@ -5,8 +5,9 @@ import CustomInput from "../Initial/Input";
 export const ReactHookFormCustomInput = ({
   name = "",
   defaultValue = "",
+  label = "",
   ...props
-}: InputHTMLAttributes<HTMLInputElement>) => {
+}: InputHTMLAttributes<HTMLInputElement> & { label?: string }) => {
   const {
     control,
     formState: { errors },
@@ -22,6 +23,7 @@ export const ReactHookFormCustomInput = ({
         const isInvalid = !!errorMessage;
         return (
           <CustomInput
+            label={label}
             {...props}
             {...field}
             name={name}
