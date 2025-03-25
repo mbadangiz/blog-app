@@ -367,3 +367,18 @@ export interface RegisterContextType {
   setStep3Data: (data: RegisterStep3Data) => void;
   clearRegistrationData: () => void;
 }
+
+export interface In_Login {
+  emailOrUsername: string;
+  password: string;
+  rememberme: boolean;
+}
+
+export interface In_LoginResponse {
+  success: boolean;
+  message: string;
+  roles: string[];
+  username: string;
+  email: string;
+  tokens: string;
+}
