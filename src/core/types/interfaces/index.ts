@@ -423,3 +423,42 @@ export interface In_ProfileUpdateResponse {
   message: string;
   profile: In_Profile;
 }
+
+export interface In_BlogCategory {
+  id: number;
+  name: string;
+}
+
+export interface In_Blog {
+  blogId: string;
+  title: string;
+  content: string;
+  status: "ARCHIVED" | "PUBLISHED";
+  image: string;
+  averageRate: number;
+  publishedAt: string;
+  updatedAt: string;
+  categories: In_BlogCategory[];
+  totalLikes: number;
+  totalRates: number;
+}
+
+export interface In_Pagination {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export interface In_BlogListResponse {
+  success: boolean;
+  data: In_Blog[];
+  pagination: In_Pagination;
+}
+
+export interface In_BlogListParams {
+  search?: string;
+  page?: number;
+  limit?: number;
+  categoryIds?: number[];
+}

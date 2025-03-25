@@ -1,9 +1,8 @@
 import { RouteObject } from "react-router-dom";
 import ProfilePage from "../pages/ProfilePage";
-import ProfileDashboardPage from "../pages/ProfilePage/ProfileDashboardPage";
-import Test from "./../Test/Test";
-import MyProfilePage from "../pages/ProfilePage/MyProfilePage";
 import EditProfilePage from "../pages/ProfilePage/EditProfilePage";
+import MyProfilePage from "../pages/ProfilePage/MyProfilePage";
+import Test from "./../Test/Test";
 
 export const profileRoutes: RouteObject[] = [
   {
@@ -11,11 +10,7 @@ export const profileRoutes: RouteObject[] = [
     element: <ProfilePage />,
     errorElement: <div>khattttaa</div>,
     children: [
-      { index: true, element: <ProfileDashboardPage /> },
-      {
-        path: "/profile/dashboard",
-        element: <ProfileDashboardPage />,
-      },
+      { index: true, element: <MyProfilePage /> },
       {
         path: "/profile/personal-info",
         element: <MyProfilePage />,
