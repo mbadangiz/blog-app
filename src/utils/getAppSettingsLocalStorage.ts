@@ -13,5 +13,5 @@ export function getDirLocalStorage(): T_AppDirection {
   if (theme === "rtl" || theme === "ltr") {
     return theme;
   }
-  return "rtl";
+  return "ltr";
 }
