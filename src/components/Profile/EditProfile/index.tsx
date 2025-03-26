@@ -62,7 +62,13 @@ function EditProfile() {
             queryKey: ["profile"],
           });
           toast.success(data.message);
-          navigate("profile/personal-info");
+          toast.success(
+            "You will be logged out shortly and will need to log in again with a new role.",
+          );
+          setTimeout(() => {
+            localStorage.removeItem("token");
+            navigate("/login");
+          }, 1200);
         }
       },
       onError: (error: any) => {
@@ -124,6 +130,11 @@ function EditProfile() {
                   name="zipCode"
                   placeholder="Zip Code"
                   label="Zip Code"
+                />
+                <CustomInputRHF
+                  name="address"
+                  placeholder="address"
+                  label="Address"
                 />
               </div>
             </div>
