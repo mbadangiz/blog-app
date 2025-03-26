@@ -1,8 +1,13 @@
 import { CustomInputRHF } from "@core/components/FormFields/ReactHookFormCustomFields";
 import { useGetProfile } from "@core/tanstack-hooks/profile/getProfile";
 import { useUpdateProfile } from "@core/tanstack-hooks/profile/updateProfile";
+import {
+  UpdateProfileDto,
+  UpdateProfileSchema,
+} from "@core/validations/updateProfile";
 import Button from "@FormFields/Initial/Button";
 import InputFile from "@FormFields/Initial/File";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import {
   In_EditProfileForm,
@@ -23,7 +28,9 @@ function EditProfile() {
 
   const navigate = useNavigate();
 
-  const methods = useForm<In_EditProfileForm>();
+  const methods = useForm<UpdateProfileDto>({
+    resolver: zodResolver(UpdateProfileSchema),
+  });
 
   useEffect(() => {
     if (profileData) {
@@ -62,13 +69,16 @@ function EditProfile() {
             queryKey: ["profile"],
           });
           toast.success(data.message);
-          toast.success(
-            "You will be logged out shortly and will need to log in again with a new role.",
-          );
-          setTimeout(() => {
-            localStorage.removeItem("token");
-            navigate("/login");
-          }, 1200);
+          if (data?.newRole) {
+            toast.success(
+              "You will be logged out shortly and will need to log in again with a new role.",
+            );
+            setTimeout(() => {
+              localStorage.removeItem("token");
+              navigate("/login");
+            }, 1200);
+          }
+          navigate("/profile");
         }
       },
       onError: (error: any) => {

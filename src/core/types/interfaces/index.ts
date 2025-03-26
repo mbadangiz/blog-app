@@ -423,6 +423,7 @@ export interface In_ProfileUpdateResponse {
   success: boolean;
   message: string;
   profile: In_Profile;
+  newRole?: boolean;
 }
 
 export interface In_BlogCategory {

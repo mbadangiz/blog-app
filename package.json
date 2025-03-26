@@ -10,7 +10,7 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.9.1",
+    "@hookform/resolvers": "^3.10.0",
     "@tanstack/react-query": "^5.59.19",
     "@tanstack/react-query-devtools": "^5.59.19",
     "@tanstack/react-table": "^8.20.6",
@@ -22,14 +22,15 @@
     "path": "^0.12.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.54.1",
+    "react-hook-form": "^7.54.2",
     "react-hot-toast": "^2.5.1",
     "react-icons": "^5.3.0",
     "react-router-dom": "^6.27.0",
     "react-select": "^5.8.3",
     "styled-components": "^6.1.13",
     "sweetalert2": "^11.15.10",
-    "sweetalert2-react-content": "^5.1.0"
+    "sweetalert2-react-content": "^5.1.0",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^2",
