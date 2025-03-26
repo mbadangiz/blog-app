@@ -29,7 +29,7 @@ const MyProfile = () => {
               {data.profile.firstname} {data.profile.lastname}
             </h3>
             <div className="m-auto mt-2 w-fit">
-              <Link to={"edit"}>
+              <Link to={"/profile/personal-info/edit"}>
                 <CiEdit
                   size={30}
                   className="text-gray-600 transition-colors hover:text-gray-800 dark:text-gray-300 dark:hover:text-white"

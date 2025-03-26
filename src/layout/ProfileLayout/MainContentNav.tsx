@@ -2,25 +2,11 @@ import { profileMainContentNavStyleConfig } from "@core/configs/styleConfigs/pro
 import { useGetProfile } from "@core/tanstack-hooks/profile/getProfile";
 import useAppSettings from "@hooks/useAppSettings";
 import generateSingleClassString from "@utils/generateSingleString";
-import classNames from "classnames";
-import { useState } from "react";
-import { CgMenuGridO } from "react-icons/cg";
 import { FaMoon } from "react-icons/fa";
-import { FiInfo } from "react-icons/fi";
 import { HiOutlineLogout, HiSun } from "react-icons/hi";
-import { IoSearch } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function MainContentNav() {
-  const [showOptions, setShowOptions] = useState(false);
-  const { profileMenuOptions } = profileMainContentNavStyleConfig;
-
-  const {
-    default: Prodefault,
-    active: Proactive,
-    deactive: Prodeactive,
-  } = profileMenuOptions;
-
   return (
     <div className="sticky top-5 flex w-full justify-end">
       <div
@@ -32,7 +18,7 @@ export function MainContentNav() {
           <ProfileImage />
         </div>
 
-        <div className="relative md:hidden">
+        {/* <div className="relative md:hidden">
           <CgMenuGridO
             size={25}
             onClick={() => setShowOptions((prev) => !prev)}
@@ -46,15 +32,15 @@ export function MainContentNav() {
           >
             <MenuOptions />
           </div>
-        </div>
+        </div> */}
 
         <div className="hidden flex-row-reverse content-center items-center gap-5 md:flex">
           <ProfileImage />
           <MenuOptions />
         </div>
-        <Link to={"/search"}>
+        {/* <Link to={"/search"}>
           <IoSearch size={25} className="mr-2" />
-        </Link>
+        </Link> */}
       </div>
     </div>
   );
@@ -77,14 +63,21 @@ function ProfileImage() {
 
 function MenuOptions() {
   const { toggleTheme, themeSchema } = useAppSettings();
+  const navigate = useNavigate();
   return (
     <>
-      <FiInfo size={25} />
+      {/* <FiInfo size={25} /> */}
       <div onClick={toggleTheme}>
         {themeSchema === "light" ? <FaMoon size={20} /> : <HiSun size={24} />}
       </div>
 
-      <HiOutlineLogout size={24} />
+      <HiOutlineLogout
+        size={24}
+        onClick={() => {
+          localStorage.removeItem("token");
+          navigate("/login");
+        }}
+      />
     </>
   );
 }
