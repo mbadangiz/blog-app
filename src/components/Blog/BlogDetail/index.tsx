@@ -104,7 +104,10 @@ function BlogDetail() {
 
   if (isPending) {
     return (
-      <div style={{ textAlign: "center", padding: "20px" }}>Loading...</div>
+      <div>
+        <SimpleSpinner className="size-10" />
+        <p>Please Wait...</p>
+      </div>
     );
   }
 
