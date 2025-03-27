@@ -13,7 +13,7 @@ export const blogRoutes: RouteObject[] = [
         element: <BlogList />,
       },
       {
-        path: "blog/:id",
+        path: "/blog/:id",
         element: <BlogDetail />,
       },
     ],

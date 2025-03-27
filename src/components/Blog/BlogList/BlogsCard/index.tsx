@@ -6,7 +6,7 @@ const BlogCard = ({ blog }: { blog: In_Blog }) => {
   return (
     <Link to={`/blog/${blog.blogId}`}>
       <div className="col-span-12 rounded-lg bg-white p-2 dark:bg-dark-midnightBlue sm:col-span-6 md:col-span-6 lg:col-span-6 xl:col-span-4">
-        <CoverImage _id={1} coverImageUrl={blog.image} />
+        <CoverImage coverImageUrl={blog.image} />
 
         <div className="bg-secondary-100 flex w-full flex-1 flex-col justify-between rounded-lg p-2">
           <h2 className="text-secondary-700 mb-4 font-bold">{blog.title}</h2>

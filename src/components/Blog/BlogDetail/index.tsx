@@ -3,12 +3,104 @@ import Badge from "@coreComps/Badge";
 import Flex from "@coreComps/divisions/Flex";
 import { useParams } from "react-router-dom";
 import { FaThumbsUp, FaStar } from "react-icons/fa";
+import { Rate } from "rsuite";
+import { useLikeBlog } from "@core/tanstack-hooks/Blogs/BlogLike";
+import toast from "react-hot-toast";
+import { useQueryClient } from "@tanstack/react-query";
+import { useUnLikeBlog } from "@core/tanstack-hooks/Blogs/BlogUnlike";
+import SimpleSpinner from "@coreComps/SimpleSpinner";
+import { useAddUpdateRate } from "@core/tanstack-hooks/Blogs/BlogaddUpdateRate";
+import { useBlogRemoveRate } from "@core/tanstack-hooks/Blogs/BlogRemoveRate";
+import BlogComments from "./Comments";
+import CreateNewComment from "./Comments/CreateNewComment";
 
-// import LeftDetailSection from "./LeftDetailsSection";
 function BlogDetail() {
+  const queryClient = useQueryClient();
   const { id } = useParams();
 
   const { data, isError, isSuccess, isPending } = useBlogDetails(id!);
+
+  const { mutate: likeBlog, isPending: likePending } = useLikeBlog();
+  const { mutate: unLikeBlog, isPending: unLikePending } = useUnLikeBlog();
+  const { mutate: addUpdateRate, isPending: addUpdateRatePending } =
+    useAddUpdateRate();
+
+  const { mutate: removeRate, isPending: removeRatePending } =
+    useBlogRemoveRate();
+  const handleLike = () => {
+    likeBlog(id!, {
+      onSuccess: (success) => {
+        if (success.success) {
+          queryClient.invalidateQueries({ queryKey: ["blogDetails", id!] });
+          toast.success(success.message);
+        }
+      },
+      onError: (error: any) => {
+        if (error.response?.data?.message) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error("An error occurred while adding like");
+        }
+      },
+    });
+  };
+
+  const handleUnLike = () => {
+    unLikeBlog(id!, {
+      onSuccess: (success) => {
+        if (success.success) {
+          queryClient.invalidateQueries({ queryKey: ["blogDetails", id!] });
+          toast.success(success.message);
+        }
+      },
+      onError: (error: any) => {
+        if (error.response?.data?.message) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error("An error occurred while adding like");
+        }
+      },
+    });
+  };
+
+  const handleAddOrUpdateRate = (rate: number) => {
+    addUpdateRate(
+      { id: id!, rate },
+      {
+        onSuccess: (success) => {
+          if (success.success) {
+            queryClient.invalidateQueries({ queryKey: ["blogDetails", id!] });
+            toast.success(success.message);
+          }
+        },
+        onError: (error: any) => {
+          if (error.response?.data?.message) {
+            toast.error(error.response.data.message);
+          } else {
+            toast.error("An error occurred while updating the rate");
+          }
+        },
+      },
+    );
+  };
+
+  const handleRemoveRate = () => {
+    removeRate(id!, {
+      onSuccess: (success) => {
+        if (success.success) {
+          queryClient.invalidateQueries({ queryKey: ["blogDetails", id!] });
+          toast.success(success.message);
+        }
+      },
+      onError: (error: any) => {
+        if (error.response?.data?.message) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error("An error occurred while removing the rate");
+        }
+      },
+    });
+  };
 
   if (isPending) {
     return (
@@ -49,17 +141,58 @@ function BlogDetail() {
               </p>
             </div>
           </div>
+
           <div>
             <Flex className="mt-5 gap-3">
-              <div className="flex items-center gap-1">
-                <FaThumbsUp
-                  size={24}
-                  className={`${data.data.userInteraction.hasLiked && "text-rose-600"} `}
-                />
+              <div className="flex cursor-pointer items-center gap-1">
+                {likePending || unLikePending ? (
+                  <SimpleSpinner className="size-6" />
+                ) : (
+                  <>
+                    <FaThumbsUp
+                      size={24}
+                      className={`${data.data.userInteraction.hasLiked && "text-rose-600"} `}
+                      onClick={() => {
+                        if (!data.data.userInteraction.hasLiked) {
+                          handleLike();
+                        } else {
+                          handleUnLike();
+                        }
+                      }}
+                    />
+                    <span>{data.data.totalLikes}</span>
+                  </>
+                )}
               </div>
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-3">
                 <FaStar size={24} className="text-yellow-500" />
                 <span>{data.data.averageRate}</span>
+
+                <div className="mx-5">
+                  {addUpdateRatePending || removeRatePending ? (
+                    <SimpleSpinner className="size-6" />
+                  ) : (
+                    <>
+                      <Rate
+                        color="yellow"
+                        max={6}
+                        size="sm"
+                        value={data.data.userInteraction.userRate || 0}
+                        onChange={(e) => {
+                          handleAddOrUpdateRate(e);
+                        }}
+                      />
+                      {data.data.userInteraction.userRate && (
+                        <span
+                          className="cursor-pointer hover:text-rose-500 hover:underline"
+                          onClick={handleRemoveRate}
+                        >
+                          Remove Rate
+                        </span>
+                      )}
+                    </>
+                  )}
+                </div>
               </div>
             </Flex>
           </div>
@@ -83,6 +216,10 @@ function BlogDetail() {
             <p className="text-sm">{data.data.seoContent}</p>
           </div>
         </section>
+
+        <CreateNewComment />
+
+        {data.data.Comments && <BlogComments id={id!} />}
       </div>
     );
 }

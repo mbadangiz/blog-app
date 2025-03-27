@@ -487,6 +487,7 @@ export interface In_BlogDataDetail {
   categories: In_BlogCategoryDetail[];
   _count: In_BlogCountsDetail;
   userInteraction: In_UserInteractionDetail;
+  Comments: boolean;
 }
 
 export interface In_BlogCategoryDetail {
@@ -521,4 +522,55 @@ export interface In_CreateBlogResponse {
   success: boolean;
   message: string;
   id: string;
+}
+
+export interface In_GeneralResponse {
+  success: boolean;
+  message: string;
+}
+
+export interface In_Rate {
+  rate: number;
+}
+
+export interface In_CommentData {
+  content: string;
+  blogId: string;
+  parentId?: string;
+}
+
+export interface In_CommentResponse {
+  success: boolean;
+  message: string;
+  commentId?: string;
+}
+
+export interface In_GetCommentsUser {
+  fullName: string;
+  avatar: string;
+}
+
+export interface In_GetCommentsComment {
+  commentId: string;
+  content: string;
+  createdAt: string;
+  user: In_GetCommentsUser;
+  replies: boolean;
+}
+
+export interface In_GetCommentsPagination {
+  total: number;
+  page: number;
+  totalPages: number;
+}
+
+export interface In_GetCommentsResponse {
+  success: boolean;
+  data: In_GetCommentsComment[];
+  pagination: In_GetCommentsPagination;
+}
+
+export interface In_GetCommentsParams {
+  id: string;
+  page: number;
 }
