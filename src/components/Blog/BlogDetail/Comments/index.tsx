@@ -48,11 +48,8 @@ function BlogComments({ id }: { id: string }) {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
-                  })}
-                  at
-                  {new Date(comment.createdAt).toLocaleTimeString("en-US", {
-                    hour: "2-digit",
-                    minute: "2-digit",
+                    hour: "numeric",
+                    minute: "numeric",
                   })}
                 </span>
               </div>

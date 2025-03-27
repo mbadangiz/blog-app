@@ -23,6 +23,7 @@ function CreateNewComment() {
             queryClient.invalidateQueries({
               queryKey: ["blogComments", id!],
             });
+            queryClient.invalidateQueries({ queryKey: ["blogDetails", id!] });
             toast.success(success.message);
           }
         },
@@ -35,6 +36,7 @@ function CreateNewComment() {
         },
       },
     );
+    methode.reset();
   };
 
   return (
